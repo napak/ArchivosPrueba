@@ -6,8 +6,7 @@ if (!isset($_SESSION["fechaBusqueda"]) || $_SESSION["fechaBusqueda"] == ""){
 }else{ 
 	$fechaRecibida = $_SESSION["fechaBusqueda"]; 
 };
-//echo $fechaRecibida;
-$_SESSION["fechaBusqueda"] = "";
+$_SESSION["fechaBusqueda"] = "";//Vaciamos la variable por si se vuelve a cargar la pagina (Evita errores)
 $anyoRecibido = substr($fechaRecibida, 0,4);
 $mesRecibido = quitaCeros(substr($fechaRecibida, 5,2));
 $diaRecibido = quitaCeros(substr($fechaRecibida, 8,2));
@@ -37,8 +36,8 @@ function quitaCeros ($numero){
  	*/
 	$datosTabla = array(); //Array final
 	$datos = wire('pages')->get('/practicas/'.$anyo.'/'.$mes.'/'.$dia.'/')->children;
-	$arrayDatos = array(); //Array con todos los Profesores
-	$arrayDatosURL = array(); //Array con todos los Profesores
+	$arrayDatos = array(); //Array con todos los hijos de 'X' dia
+	$arrayDatosURL = array(); //Array con todos los hijos de 'X' dia pero la URL
 	foreach ($datos as $dato ) {
 		$idDatoURL= $dato->name;
 		array_push($arrayDatosURL, $idDatoURL);
@@ -48,20 +47,20 @@ function quitaCeros ($numero){
 	//Matriculas de motos
 	for ($i=0; $i < count($arrayDatos); $i++) { 
 		$datosTemp = array(); //Array con datos temporales
-		array_push($datosTemp, $arrayDatos[$i]);//Array con datos temporales
+		array_push($datosTemp, $arrayDatos[$i]);//Se añaden datos al array con datos temporales
 		$datosPracticas = wire('pages')->get('/practicas/'.$anyo.'/'.$mes.'/'.$dia.'/'.$arrayDatosURL[$i].'/')->children;
-	$arrayDatosPracticas = array(); //Array con todos los Profesores
+	$arrayDatosPracticas = array(); //Array con los datos de las practicas
 	foreach ($datosPracticas as $datoPractica ) {
 		//AQUI SE DEBERIA HACER UN IF PARA DECIR QUE SI LA VARIABLE ES 0 MUESTRE EL TITLE, SI ES SUPERIOR, MOSTRAR EL CONTENIDO
+		//POR AHORA SE HA CREADO OTRA SOLUCION EN LA SIGUIENTE FUNCION, PERO NO SE DESCARTA QUE ESTA SEA LA OPCION BUENA.
 		$idDatoPractica= $datoPractica->title;
-		echo "<br>".wire('pages')->get("template=".$datoPractica->name)."<br>";
 		array_push($arrayDatosPracticas, $idDatoPractica);
 	};
 	//Contenido interno de cada moto (Profesor, hora, hora, hora...)
 	for ($e=0; $e < count($arrayDatosPracticas); $e++) { 
-		array_push($datosTemp, $arrayDatosPracticas[$e]);//Array con datos temporales
+		array_push($datosTemp, $arrayDatosPracticas[$e]);//Añadiendo mas datos temporales al Array
 	};//FIN FOR CONTENIDO INTERNO
-	array_push($datosTabla, $datosTemp);//Añadimos array temporal al array Final
+	array_push($datosTabla, $datosTemp); //Añadimos todo el Array temporal al Array Final
 	};//FIN FOR MOTOS
 	//Creacion de la tabla
 	crearTabla($datosTabla); // Se llama a la funcion pasandole el Array de Arrays.
@@ -76,6 +75,7 @@ function crearTabla($arrayTabla){
  	for ($i=0; $i < count($arrayTabla[0]); $i++) { 
  		$tabla.= '<tr>';
  		for ($e=0; $e < count($arrayTabla) ; $e++) { 
+ 			//AQUI HAY UNA POSIBLE SOLUCION AL PROBLEMA DE LA FUNCION ANTERIOR
  			if ($e==0) {
  				$tabla.= '<td>'.$arrayTabla[$e][$i].'</td>';
  			} else {
@@ -85,6 +85,6 @@ function crearTabla($arrayTabla){
 	$tabla.= '</tr>';
 	};//FIN FOR FILA
 	$tabla.= '</table>';
-	echo $tabla;
+	echo $tabla; //Mostramos informacion.
 };
 ?>
