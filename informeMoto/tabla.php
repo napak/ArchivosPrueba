@@ -1,11 +1,23 @@
 <?php
-// :::::::::::::::::::::::::::::::::::::: Variables AUTOMATICAS
+session_start(); 
 if (!isset($_SESSION["fechaBusqueda"]) || $_SESSION["fechaBusqueda"] == ""){ 
 	//En caso de no existir variable o que este vacia, reenvia a la pagina donde se selecciona el dia.
 	echo header("Location: /cubel/moto/buscador/comprobador/"); //Cambiar en version Online
 }else{ 
 	$fechaRecibida = $_SESSION["fechaBusqueda"]; 
 };
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title></title>
+<link rel="stylesheet" href="<?php echo $config->urls->templates ?>css/bootstrap.css" />
+</head>
+<body>
+
+<?php
+// :::::::::::::::::::::::::::::::::::::: Variables AUTOMATICAS
 $_SESSION["fechaBusqueda"] = "";//Vaciamos la variable por si se vuelve a cargar la pagina (Evita errores)
 $anyoRecibido = substr($fechaRecibida, 0,4);
 $mesRecibido = quitaCeros(substr($fechaRecibida, 5,2));
@@ -53,7 +65,16 @@ function quitaCeros ($numero){
 	foreach ($datosPracticas as $datoPractica ) {
 		//AQUI SE DEBERIA HACER UN IF PARA DECIR QUE SI LA VARIABLE ES 0 MUESTRE EL TITLE, SI ES SUPERIOR, MOSTRAR EL CONTENIDO
 		//POR AHORA SE HA CREADO OTRA SOLUCION EN LA SIGUIENTE FUNCION, PERO NO SE DESCARTA QUE ESTA SEA LA OPCION BUENA.
-		$idDatoPractica= $datoPractica->title;
+		if ($i==0) {
+			$idDatoPractica= $datoPractica->title;
+		} else {
+			if ($idDatoPractica= $datoPractica->template=="enlaceProfesor") {
+				$idDatoPractica= $datoPractica->enlaceProfesor->profesorNombre;
+			} else {
+				$idDatoPractica= $datoPractica->horaAlumno->alumnoNombre;			
+			}
+		
+		}
 		array_push($arrayDatosPracticas, $idDatoPractica);
 	};
 	//Contenido interno de cada moto (Profesor, hora, hora, hora...)
@@ -71,20 +92,45 @@ function crearTabla($arrayTabla){
  	* Esta funcion se encarga transformar el array recibido
  	* para imprimir una tabla con sus datos en pantalla.
  	*/
- 	$tabla = '<table  border=1 cellspacing=2 cellpadding=0 style="border-collapse: collapse" bordercolor="000000" width="'.$widthT.'%">';
+ 	$tabla = '<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Resultados</div>
+  <div class="panel-body">
+    <p>...</p>
+  </div>';
+ 	//$tabla .= '<table class="table" border=1 cellspacing=2 cellpadding=0 style="border-collapse: collapse" bordercolor="000000" width="'.$widthT.'%">';
+ 	$tabla .= '<table class="table">';
  	for ($i=0; $i < count($arrayTabla[0]); $i++) { 
  		$tabla.= '<tr>';
  		for ($e=0; $e < count($arrayTabla) ; $e++) { 
  			//AQUI HAY UNA POSIBLE SOLUCION AL PROBLEMA DE LA FUNCION ANTERIOR
- 			if ($e==0) {
+ 			//if ($e==0) {
  				$tabla.= '<td>'.$arrayTabla[$e][$i].'</td>';
- 			} else {
- 				$tabla.= '<td>'." fictico ".'</td>';
- 			};
+ 			//} else {
+ 			//	$tabla.= '<td>'.$arrayTabla[$e][$i].'</td>';
+ 				//$tabla.= '<td>'." fictico ".'</td>';
+ 			//};
 	}; //FIN FOR COLUMNAS
 	$tabla.= '</tr>';
 	};//FIN FOR FILA
-	$tabla.= '</table>';
+	$tabla.= '</table></div>';
 	echo $tabla; //Mostramos informacion.
+	$datosTabla = array(); //Array final
+	//$datos = wire('pages')->get('/practicas/2014/enero/11/ibr1-9083glf/profesor1/')->enlaceProfesor;
+	//$datos = wire('page')->find('pages_id=1095')->data;
+	//field_profesornombre
+	//echo "<br>->>".$datos."<<-<br>"; 
+	$arrayDatos = array(); //Array con todos los hijos de 'X' dia
+	$arrayDatosURL = array(); //Array con todos los hijos de 'X' dia pero la URL
+	foreach ($datos as $dato ) {
+		$idDatoURL= $dato->name;
+		echo "<br>".$dato."<br>";
+		echo "<br>".$dato->name."<br>";
+		array_push($arrayDatosURL, $idDatoURL);
+		$idDato= $dato->title;
+		array_push($arrayDatos, $idDato);
+	};
 };
 ?>
+</body>
+</html>
