@@ -2,7 +2,7 @@
 session_start(); 
 if (!isset($_SESSION["fechaBusqueda"]) || $_SESSION["fechaBusqueda"] == ""){ 
 	//En caso de no existir variable o que este vacia, reenvia a la pagina donde se selecciona el dia.
-	echo header("Location: /cubel/moto/buscador/comprobador/"); //Cambiar en version Online
+	echo header("Location: /cubel/moto/buscador/comprobador/"); //Cambiar en version Online.
 }else{ 
 	$fechaRecibida = $_SESSION["fechaBusqueda"]; 
 };

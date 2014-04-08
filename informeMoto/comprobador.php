@@ -1,5 +1,5 @@
 <?php
-// :::::::::::::::::::::::::::::::::::::: Variables AUTOMATICAS
+// :::::::::::::::::::::::::::::::::::::: Variables AUTOMATICAS.
 session_start(); 
 //$fechaRecibida = $_POST["datetime"]; //Variable recibida desde la web
 $fechaRecibida = "2014-01-21"; //Variable Manual de Pruebas
