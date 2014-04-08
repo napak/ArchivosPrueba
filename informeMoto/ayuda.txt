@@ -1,0 +1,15 @@
+.: Funciones :.
+
+Archivos preparados para la nueva estructura de la base de datos.
+
+- comprobador.php 
+	-> Se encarga de buscar la información de "x" dia. 
+	-> En caso de no existir ninguna información, se encarga de crear la información base.
+	-> Acto seguido llama a tabla.php para que muestre el resultado y comprobar que se ha creado correctamente.
+- crearAnyo.php
+	-> Crea la estructura entera de la base de datos para el próximo año.
+- imprimir.php 
+	-> Muestra en pantalla (deberia de hacerlo en papel) el informe de "x" dia con "x" profesor.
+	* La funcion de imprimir en PDF funciona pero esta desactivada.
+- tabla.php
+	-> Como se indica más arriba, se encarga de mostrar la informacion solicitada por el archivo comprobador.php
