@@ -30,8 +30,6 @@ function quitaCeros ($numero){
  	};
  	return $resultado;
  };
-
-
  function buscarDatos ($dia,$mes,$anyo,$profesor){
 	/**
  	* Esta funcion se encarga de ir a buscar los datos que queremos y los mete en un array
@@ -63,6 +61,8 @@ function quitaCeros ($numero){
 	$arrayMotoPractica = array();
 	$arrayPermisoAlumno = array();
 	$arrayCodigoAlumno = array();
+	$arraySecCliente = array();
+	$arrayCircuito = array();
 	$anyadirArray = "No";
 	for ($i=0; $i <count($arrayMotos); $i++) { 
 		$practicas = wire('pages')->get('/practicas/'.$anyo.'/'.$mes.'/'.$dia.'/'.$arrayMotos[$i].'/')->children;
@@ -87,6 +87,8 @@ function quitaCeros ($numero){
 				array_push($arrayPermisoAlumno, $practica->horaAlumno->alumnoPermiso);
 				array_push($arrayCodigoAlumno, $practica->horaAlumno->alumnoNumero);
 				array_push($arrayMotoPractica, $arrayMotos[$i]);
+				array_push($arraySecCliente, $practica->horaAlumno->alumnoSecCliente);
+				array_push($arrayCircuito, $practica->horaTipoCircuito);
 				}
 				
 			};
@@ -110,15 +112,18 @@ $table = '
   </div>';
 //$table = '<table  border=1 cellspacing=2 cellpadding=0 style=\"border-collapse: collapse\" bordercolor=\"000000\" width=\"".$widthT."%\">';
  $table .= '<table class="table">';
-$table .= '<tr><td>Horarios</td><td>Nº Alumno</td><td>Nombre</td><td>Moto</td><td>Permiso</td></tr>';
+$table .= '<tr><td>Horarios</td><td>Nº Alumno</td><td>Permiso</td><td>Nombre</td><td>Circuito</td><td>Sec./Cliente</td><td>Moto</td><td>Firma</td></tr>';
 for ($a=0; $a < count($arrayCampos) ; $a++) { 
 	$table .= '<tr><td>'.$arrayCampos[$a].'</td>';
 	for ($o=0; $o <count($arrayHoras) ; $o++) { 
 		if ($arrayCampos[$a]==$arrayHoras[$o]) {
 			$table .='<td>'.$arrayCodigoAlumno[$o].'</td>';
-			$table .='<td>'.$arrayAlumnos[$o].'</td>';
-			$table .='<td>'.$arrayMotoPractica[$o].'</td>';
 			$table .='<td>'.$arrayPermisoAlumno[$o].'</td>';
+			$table .='<td>'.$arrayAlumnos[$o].'</td>';
+			$table .='<td>'.$arrayCircuito[$o].'</td>';
+			$table .='<td>'.$arraySecCliente[$o].'</td>';
+			$table .='<td>'.$arrayMotoPractica[$o].'</td>';
+			$table .='<td>'.'</td>'; //Para la Firma
 			$table .='</tr>';
 		}
 	}
@@ -142,6 +147,7 @@ $piePag = "<table  border=1 cellspacing=2 cellpadding=0 style=\"border-collapse:
 
 //imprimir($table,$piePag);
 echo $table;
+//echo $piePag;
 
 
 
@@ -297,5 +303,5 @@ function imprimir($contenido,$pie){
 };
 // Boton Imprimir
 //echo "<form action=\"\" method=\"post\" target=\"_blank\"><input type=\"submit\" value=\"Imprimir\" name=\"impr\" /> </form>";
-//include("./foot.inc"); 
+//include("./foot.inc");
 ?>

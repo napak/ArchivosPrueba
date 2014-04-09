@@ -11,5 +11,6 @@ Archivos preparados para la nueva estructura de la base de datos.
 - imprimir.php 
 	-> Muestra en pantalla (deberia de hacerlo en papel) el informe de "x" dia con "x" profesor.
 	* La funcion de imprimir en PDF funciona pero esta desactivada.
+	** Muestra la tabla con la misma organización que usaban hasta el momento
 - tabla.php
 	-> Como se indica más arriba, se encarga de mostrar la informacion solicitada por el archivo comprobador.php
