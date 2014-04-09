@@ -2,7 +2,7 @@
 session_start(); 
 if (!isset($_SESSION["fechaBusqueda"]) || $_SESSION["fechaBusqueda"] == ""){ 
 	//En caso de no existir variable o que este vacia, reenvia a la pagina donde se selecciona el dia.
-	echo header("Location: /cubel/moto/buscador/comprobador/"); //Cambiar en version Online.
+	echo header("Location: /cubel/moto/buscador/comprobador/"); //Cambiar en version Online
 }else{ 
 	$fechaRecibida = $_SESSION["fechaBusqueda"]; 
 };
@@ -83,11 +83,13 @@ function quitaCeros ($numero){
 	};//FIN FOR CONTENIDO INTERNO
 	array_push($datosTabla, $datosTemp); //Añadimos todo el Array temporal al Array Final
 	};//FIN FOR MOTOS
+
 	//Creacion de la tabla
-	crearTabla($datosTabla); // Se llama a la funcion pasandole el Array de Arrays.
+	$infoFecha = 'Fecha: '.$dia. ' de '.$mes. ' de '.$anyo;
+	crearTabla($datosTabla,$infoFecha ); // Se llama a la funcion pasandole el Array de Arrays.
 };
 
-function crearTabla($arrayTabla){
+function crearTabla($arrayTabla,$fechaMostrar){
 	/**
  	* Esta funcion se encarga transformar el array recibido
  	* para imprimir una tabla con sus datos en pantalla.
@@ -96,7 +98,7 @@ function crearTabla($arrayTabla){
   <!-- Default panel contents -->
   <div class="panel-heading">Resultados</div>
   <div class="panel-body">
-    <p>...</p>
+    <p>'.$fechaMostrar.'</p>
   </div>';
  	//$tabla .= '<table class="table" border=1 cellspacing=2 cellpadding=0 style="border-collapse: collapse" bordercolor="000000" width="'.$widthT.'%">';
  	$tabla .= '<table class="table">';

@@ -1,8 +1,8 @@
 <?php
-// :::::::::::::::::::::::::::::::::::::: Variables AUTOMATICAS.
+// :::::::::::::::::::::::::::::::::::::: Variables AUTOMATICAS
 session_start(); 
-//$fechaRecibida = $_POST["datetime"]; //Variable recibida desde la web
-$fechaRecibida = "2014-01-21"; //Variable Manual de Pruebas
+$fechaRecibida = $_POST["fechaBusqueda"]; //Variable recibida desde la web
+//$fechaRecibida = "2014-01-21"; //Variable Manual de Pruebas
 $_SESSION["fechaBusqueda"] = $fechaRecibida;
 $anyoRecibido = substr($fechaRecibida, 0,4);
 $mesRecibido = quitaCeros(substr($fechaRecibida, 5,2));

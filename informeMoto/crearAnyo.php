@@ -1,5 +1,6 @@
 <?php
-crearMesesDias("2014");//Indicamos el Año a crear
+crearMesesDias($_POST["fechaCreacion"]);//Indicamos el Año a crear Automaticamente
+//crearMesesDias("2014");//Indicamos el Año a crear manualmente
 function crearMesesDias($anyo){
 	//echo "Espere...<br>";
 	// :::::::::::::::::::::::::::::::::::::: Variables Manuales
