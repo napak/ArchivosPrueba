@@ -1,0 +1,6 @@
+.: Funciones :.
+
+- crearAnyo.php 
+Este archivo se encarga de buscar en la BD la cantidad de Centros Disponibles. Una vez los tiene localizados, buscara cuantos deportes se pueden practicar y cuantas "pistas" hay habilitadas para cada deporte para añadir a cada pista el Año/Mes/Dia y copiar en su interior los horarios de la configuración.
+	-> Crea los horiros 
+	* Esta sin probar, no se sabe la duración del proceso.
