@@ -31,14 +31,11 @@ function crearMesesDias($anyo){
 	foreach ($horas as $hora ) {
 		array_push($arrayHorarios, $hora->name);	//Añadimos cada Hora al Array
 	};
-
 	/**
  	* Creacion de Año, Mes y Dia para cada una de las pistas.
  	* Para realizarlo primero tiene que listar los Deportes que hay en cada centro y
  	* las pistas que hay en cada Deporte.
  	*/
-
-
  		for ($a=0; $a<count($arrayCentros)-1 ; $a++) { 
  			$deportes = wire('pages')->get('/centros/'.$arrayCentros[$a].'/')->children; // Buscamos los Hijos de la Ruta del Centro
 			foreach ($deportes as $deporte ) {
@@ -72,13 +69,13 @@ function crearMesesDias($anyo){
 							$page_dia->save(); 
 							//Creamos los Horarios
 							for ($d = 0; $d <= count($arrayHorarios)-1; $d++) {
-								$page_dia = new Page(); // Creamos un objeto de $page
-								$page_dia->template = 'hora'; // Decimos que Template usaremos
-								$page_dia->parent = wire('pages')->get('/centros/'.$arrayCentros[$a].'/'.$deporte->name.'/'.$anyo.'/'.strtolower($arrayMeses[$b])."/".$c+1."/"); // Le inidicamos quien sera el padre 
-								$page_dia->name = $arrayHorarios[$d]; // indicamos el nombre de la pagina
-								$page_dia->title = $arrayHorarios[$d]; // indicamos el titulo de la pagina
+								$page_horario = new Page(); // Creamos un objeto de $page
+								$page_horario->template = 'hora'; // Decimos que Template usaremos
+								$page_horario->parent = wire('pages')->get('/centros/'.$arrayCentros[$a].'/'.$deporte->name.'/'.$anyo.'/'.strtolower($arrayMeses[$b])."/".$c+1."/"); // Le inidicamos quien sera el padre 
+								$page_horario->name = $arrayHorarios[$d]; // indicamos el nombre de la pagina
+								$page_horario->title = $arrayHorarios[$d]; // indicamos el titulo de la pagina
 								// guardamos
-								$page_dia->save(); 
+								$page_horario->save(); 
 							}; //FIN FOR HORARIOS
 						}; //FIN FOR DIAS
 					} //FIN FOR MESES
