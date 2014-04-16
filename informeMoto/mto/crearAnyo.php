@@ -44,7 +44,7 @@ function crearMesesDias($anyo){
 					//Creamos año
 					$page_anyo = new Page(); // Creamos un objeto de $page
 					$page_anyo->template = 'anyo'; // Decimos que Template usaremos
-					$page_anyo->parent = wire('pages')->get('/centros/'.$arrayCentros[$a].'/'.$deporte->name.'/'); // Le inidicamos quien sera el padre 
+					$page_anyo->parent = wire('pages')->get('/centros/'.$arrayCentros[$a].'/'.$deporte->name.'/'.$pista->name.'/'); // Le inidicamos quien sera el padre 
 					$page_anyo->name = $anyo; // indicamos el nombre de la pagina
 					$page_anyo->title = $anyo; // indicamos el titulo de la pagina
 					// guardamos
@@ -53,7 +53,7 @@ function crearMesesDias($anyo){
 					for ($b =0; $b <= count($arrayMeses)-1; $b++) {
 						$page_mes = new Page(); // Creamos un objeto de $page
 						$page_mes->template = 'mes'; // Decimos que Template usaremos
-						$page_mes->parent = wire('pages')->get('/centros/'.$arrayCentros[$a].'/'.$deporte->name.'/'.$anyo.'/'); // Le inidicamos quien sera el padre 
+						$page_mes->parent = wire('pages')->get('/centros/'.$arrayCentros[$a].'/'.$deporte->name.'/'.$pista->name.'/'.$anyo.'/'); // Le inidicamos quien sera el padre 
 						$page_mes->name = strtolower($arrayMeses[$b]); // indicamos el nombre en minusculas.
 						$page_mes->title = $arrayMeses[$b]; // indicamos el titulo de la pagina.
 						// guardamos
@@ -62,23 +62,25 @@ function crearMesesDias($anyo){
 						for ($c = 0; $c <= $arrayDiasMes[$b]-1; $c++) {
 							$page_dia = new Page(); // Creamos un objeto de $page
 							$page_dia->template = 'dia'; // Decimos que Template usaremos
-							$page_dia->parent = wire('pages')->get('/centros/'.$arrayCentros[$a].'/'.$deporte->name.'/'.$anyo.'/'.strtolower($arrayMeses[$b])."/"); // Le inidicamos quien sera el padre 
+							$page_dia->parent = wire('pages')->get('/centros/'.$arrayCentros[$a].'/'.$deporte->name.'/'.$pista->name.'/'.$anyo.'/'.strtolower($arrayMeses[$b]).'/'); // Le inidicamos quien sera el padre 
+
 							$page_dia->name = $c+1; // indicamos el nombre de la pagina
 							$page_dia->title = $c+1; // indicamos el titulo de la pagina
+							$url = $page_dia->title;
 							// guardamos
 							$page_dia->save(); 
 							//Creamos los Horarios
 							for ($d = 0; $d <= count($arrayHorarios)-1; $d++) {
 								$page_horario = new Page(); // Creamos un objeto de $page
 								$page_horario->template = 'hora'; // Decimos que Template usaremos
-								$page_horario->parent = wire('pages')->get('/centros/'.$arrayCentros[$a].'/'.$deporte->name.'/'.$anyo.'/'.strtolower($arrayMeses[$b])."/".$c+1."/"); // Le inidicamos quien sera el padre 
+								$page_horario->parent = wire('pages')->get('/centros/'.$arrayCentros[$a].'/'.$deporte->name.'/'.$pista->name.'/'.$anyo.'/'.strtolower($arrayMeses[$b]).'/'.$url.'/'); // Le inidicamos quien sera el padre 
 								$page_horario->name = $arrayHorarios[$d]; // indicamos el nombre de la pagina
 								$page_horario->title = $arrayHorarios[$d]; // indicamos el titulo de la pagina
 								// guardamos
 								$page_horario->save(); 
 							}; //FIN FOR HORARIOS
 						}; //FIN FOR DIAS
-					} //FIN FOR MESES
+					}; //FIN FOR MESES
 				};//FIN FOREACH PISTAS
 			}; //FIN FOREACH DEPORTES
  		}; // FIN FOR CENTROS
